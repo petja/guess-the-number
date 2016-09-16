@@ -1,4 +1,8 @@
-public class NumberGuess {
+package NumberGuess;
+
+import NumberGuess.GameCommon;
+
+public class Main {
     public static void main(String[] args) {
         int minimum = 1;
         int maximum = 1000;
@@ -35,7 +39,7 @@ public class NumberGuess {
         output[1] = maximum;
 
         // Ask question from the user
-        boolean answer = askQuestion("\nRound " + round + ": Is the number greater than " + number + "?");
+        boolean answer = GameCommon.askQuestion("\nRound " + round + ": Is the number greater than " + number + "?");
 
         if (answer) {
             // If N is greater than average, set new minimum value
@@ -46,23 +50,5 @@ public class NumberGuess {
         }
         
         return output;
-    }
-
-    public static boolean askQuestion(String question) {
-        // Show question to user
-        System.out.println(question);
-
-        // Read user's answer and convert it to lower case
-        String input = System.console().readLine("Please type either Y[es] or N[o] to continue: ").toLowerCase();
-
-        // Deal with the user input
-        if(input.equals("y") || input.equals("yes")){
-            return true;
-        }else if(input.equals("n") || input.equals("no")){
-            return false;
-        }else{
-            System.out.println("\nIncorrect answer! Please try again.");
-            return askQuestion(question);
-        }
     }
 }
