@@ -16,7 +16,7 @@ public class GameCommon {
         }else if(input.equals("n") || input.equals("no")){
             return false;
         }else{
-            System.out.println("\nIncorrect answer! Please try again.");
+            System.out.println("\n\u001B[31mIncorrect answer! Please try again.\u001B[00m");
             return askQuestion(question);
         }
     }

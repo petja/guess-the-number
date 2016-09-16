@@ -18,6 +18,12 @@ public class AnotherApproach {
         // Keep count on rounds
         int round = 0;
 
+        round++;
+        possibilities = askDivisibility(round, possibilities, 2);
+
+        round++;
+        possibilities = askDivisibility(round, possibilities, 5);
+
         while(possibilities.size() > 1) {
             // Next round!
             round++;
@@ -26,10 +32,37 @@ public class AnotherApproach {
             possibilities = range;
         }
 
-        System.out.println("\nNumber solved! It was: " + possibilities.get(0) + "\n");
+        System.out.println("\n\u001B[01m\u001B[32mGot it!\u001B[00m\nThe number was " + possibilities.get(0) + ", wasn't it?\n");
+    }
+
+    public static ArrayList<Integer> askDivisibility(int round, ArrayList<Integer> possibilities, int divider) {
+        boolean answer = GameCommon.askQuestion("\n\u001B[01mRound " + round + ": Is the number divisible with " + divider + "?\u001B[00m");
+
+        ArrayList<Integer> newPossibilities = new ArrayList<Integer>();
+
+        if (answer) {
+            // Number is divisible
+            for(int number : possibilities){
+                if(number % divider == 0) {
+                    newPossibilities.add(number);
+                }
+            } 
+        } else {
+            // Number is not divisible
+            for(int number : possibilities){
+                if(number % divider != 0) {
+                    newPossibilities.add(number);
+                }
+            } 
+        }
+
+        return newPossibilities;
     }
 
     public static ArrayList<Integer> askNumber(int round, ArrayList<Integer> possibilities) {
+        // Tell user how many possibilities there are left
+        System.out.println("\nGot it. " + possibilities.size() + " possible numbers left. Let's continue.");
+
         // Find minimum and maximum value from the array
         int minimum = possibilities.get(0);
         int maximum = possibilities.get(possibilities.size() - 1);
@@ -38,7 +71,7 @@ public class AnotherApproach {
         int average = (minimum + maximum) / 2;
 
         // Ask question from the user
-        boolean answer = GameCommon.askQuestion("\nRound " + round + ": Is the number greater than " + average + "?");
+        boolean answer = GameCommon.askQuestion("\n\u001B[01mRound " + round + ": Is the number greater than " + average + "?\u001B[00m");
 
         ArrayList<Integer> newPossibilities = new ArrayList<Integer>();
 
