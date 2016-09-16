@@ -1,5 +1,7 @@
 package NumberGuess;
 
+import java.util.ArrayList;
+
 public class GameCommon {
     public static boolean askQuestion(String question) {
         // Show question to user
@@ -17,5 +19,16 @@ public class GameCommon {
             System.out.println("\nIncorrect answer! Please try again.");
             return askQuestion(question);
         }
+    }
+
+    public static ArrayList<Integer> rangeArray(int min, int max) {
+        int diff = max - min + 1;
+        ArrayList<Integer> range = new ArrayList<Integer>();
+
+        for(int i = 0; i < diff; i++) {
+            range.add(i + min);
+        }
+
+        return range;
     }
 }
