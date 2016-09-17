@@ -4,39 +4,44 @@ import java.util.ArrayList;
 import NumberGuess.GameCommon;
 
 public class AnotherApproach {
+
+    // Initialize variables
+    private int minimum = 1;
+    private int maximum = 999;
+    private int round = 0;
+    private ArrayList<Integer> possibilities;
+
     public static void main(String[] args) {
-        int minimum = 1;
-        int maximum = 1000;
-
-        // Create array of numbers between minimum and maximum
-        ArrayList<Integer> possibilities = GameCommon.rangeArray(minimum, maximum);
-
-        // Intro
-        System.out.println("\nPlease think any number between " + minimum + " and " + maximum);
-        System.console().readLine("Press [ENTER] when you're ready to go!\n");
-
-        // Keep count on rounds
-        int round = 0;
-
-        round++;
-        possibilities = askDivisibility(round, possibilities, 2);
-
-        round++;
-        possibilities = askDivisibility(round, possibilities, 5);
-
-        while(possibilities.size() > 1) {
-            // Next round!
-            round++;
-
-            ArrayList<Integer> range = askNumber(round, possibilities);
-            possibilities = range;
-        }
-
-        System.out.println("\n\u001B[01m\u001B[32mGot it!\u001B[00m\nThe number was " + possibilities.get(0) + ", wasn't it?\n");
+        AnotherApproach game = new AnotherApproach();
+        game.startGame();
     }
 
-    public static ArrayList<Integer> askDivisibility(int round, ArrayList<Integer> possibilities, int divider) {
-        boolean answer = GameCommon.askQuestion("\n\u001B[01mRound " + round + ": Is the number divisible with " + divider + "?\u001B[00m");
+    public void startGame() {
+        // Create an array of the numbers between the minimum and the maximum
+        this.possibilities = GameCommon.rangeArray(this.minimum, this.maximum);
+
+        // Intro
+        System.out.println("\n\u001B[01mPlease think any number between " + minimum + " and " + maximum + "\u001B[00m");
+        System.console().readLine("Press [ENTER] to start the game\n");
+
+        // Ask if the number is divisible with 10
+        boolean divide10 = askDivisibility(10);
+
+        // Run the game until we have the result
+        while(possibilities.size() > 1) {
+            askNumber();
+        }
+
+        // Game finished
+        System.out.println("\n\u001B[01m\u001B[32mNumber resolved!\u001B[00m");
+        System.out.println("The number was " + possibilities.get(0) + ", wasn't it?\n");
+    }
+
+    public boolean askDivisibility(int divider) {
+        // Increase the round
+        round++;
+
+        boolean answer = GameCommon.askQuestion("\n\u001B[01mRound " + round + ": Is the number divisible with \u001B[30m\u001B[47m" + divider + "\u001B[39m\u001B[49m?\u001B[00m");
 
         ArrayList<Integer> newPossibilities = new ArrayList<Integer>();
 
@@ -56,10 +61,15 @@ public class AnotherApproach {
             } 
         }
 
-        return newPossibilities;
+        possibilities = newPossibilities;
+
+        return answer;
     }
 
-    public static ArrayList<Integer> askNumber(int round, ArrayList<Integer> possibilities) {
+    public void askNumber() {
+        // Increase round
+        round++;
+
         // Tell user how many possibilities there are left
         System.out.println("\nGot it. " + possibilities.size() + " possible numbers left. Let's continue.");
 
@@ -71,7 +81,7 @@ public class AnotherApproach {
         int average = (minimum + maximum) / 2;
 
         // Ask question from the user
-        boolean answer = GameCommon.askQuestion("\n\u001B[01mRound " + round + ": Is the number greater than " + average + "?\u001B[00m");
+        boolean answer = GameCommon.askQuestion("\n\u001B[01mRound " + round + ": Is the number greater than \u001B[30m\u001B[47m" + average + "\u001B[39m\u001B[49m?\u001B[00m");
 
         ArrayList<Integer> newPossibilities = new ArrayList<Integer>();
 
@@ -89,7 +99,7 @@ public class AnotherApproach {
                 }
             } 
         }
-        
-        return newPossibilities;
+
+        possibilities = newPossibilities;
     }
 }
